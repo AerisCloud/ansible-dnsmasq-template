@@ -8,6 +8,43 @@ Requirements
 
 None
 
+Dependencies
+------------
+
+None
+
+Example Playbooks
+-----------------
+
+#### Simple DNS setup
+
+```yaml
+- hosts: all
+  roles:
+    - role: aeriscloud.dnsmasq-template
+      dnsmasq_servers:
+        - 8.8.8.8
+        - "/consul.domain/{{ consul_ip }}#8600"
+      dnsmasq_addresses:
+        - "/mydomain.local/{{ some_machine_ip }}"
+```
+
+#### Simple DHCP setup
+
+```yaml
+- hosts: all
+  roles:
+    - role: aeriscloud.dnsmasq-template
+      dnsmasq_no_resolv: true
+      dnsmasq_no_poll: true
+      dnsmasq_servers:
+        - 8.8.8.8
+        - 8.8.4.4
+      dnsmasq_except_interface: ppp0
+      dnsmasq_dhcp_range: 192.168.1.50,192.168.1.150,12h
+      dnsmasq_read_ethers: true
+```
+
 Role Variables
 --------------
 
@@ -110,25 +147,6 @@ only one line of it, and a plural version that is expected to be an array.
 | dnsmasq_conf_files | _array_ |
 | dnsmasq_conf_dir | _string_ |
 | dnsmasq_conf_dirs | _array_ |
-
-Dependencies
-------------
-
-None
-
-Example Playbook
-----------------
-
-```yaml
-- hosts: all
-  roles:
-    - role: aeriscloud.dnsmasq-template
-      dnsmasq_servers:
-        - 8.8.8.8
-        - "/consul.domain/{{ consul_ip }}#8600"
-      dnsmasq_addresses:
-        - "/mydomain.local/{{ some_machine_ip }}"
-```
 
 License
 -------
