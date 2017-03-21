@@ -1,0 +1,23 @@
+---
+- name: "Install dnsmasq"
+  package:
+    name: dnsmasq
+    state: present
+  tags: ['dnsmasq', 'pkgs']
+
+- name: "Configure dnsmasq"
+  template:
+    src: "{{ dnsmasq_template }}"
+    dest: /etc/dnsmasq.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart dnsmasq
+  tags: ['dnsmasq']
+
+- name: "Ensure dnsmasq is started and enabled on boot"
+  service:
+    name: dnsmasq
+    state: started
+    enabled: yes
+  tags: ['dnsmasq']

@@ -1,0 +1,3 @@
+---
+# defaults file for dnsmasq
+dnsmasq_template: dnsmasq.conf.j2
